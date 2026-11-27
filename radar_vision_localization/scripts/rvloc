@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+rvloc_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="$rvloc_root/src${PYTHONPATH:+:$PYTHONPATH}"
+rvloc_python="${RVLOC_PYTHON:-/data7/ysq/GroupTargets/.venv/bin/python}"
+exec "$rvloc_python" -m rvloc "$@"

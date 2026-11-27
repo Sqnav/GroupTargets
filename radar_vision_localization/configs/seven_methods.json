@@ -1,0 +1,77 @@
+{
+  "schema": "rvloc.experiment.v1",
+  "bandwidth_hz": 32000000.0,
+  "center_contract": "observer_scatter_at_camera_optical_center",
+  "manifest": null,
+  "calibration_artifact": null,
+  "storage": {
+    "output_root": "/data7/ysq/GroupTargets/results/radar_vision_localization",
+    "weights_root": "/data7/ysq/GroupTargets/weights/radar_vision_localization",
+    "cache_root": "/data7/ysq/GroupTargets/data/cache/radar_vision_localization"
+  },
+  "checkpoints": {
+    "rgb": null,
+    "single_frame": null,
+    "world_fusion": null
+  },
+  "model": {
+    "architecture": "single_query_depth_v3",
+    "depth_refinement_steps": 0,
+    "candidate_multipliers": [
+      -3,
+      -2,
+      -1,
+      -0.5,
+      0,
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "visual_std_min_m": 0.25,
+    "visual_std_max_m": 16.0,
+    "visual_std_initial_m": 2.0,
+    "visual_prior_nll_weight": 0.1
+  },
+  "world": {
+    "hidden_size": 64,
+    "rollout_horizons": [
+      1,
+      3
+    ]
+  },
+  "training": {
+    "epochs": 80,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "warmup_epochs": 2,
+    "seed": 20261118,
+    "truncation_frames": 4,
+    "gradient_clip": 5.0,
+    "device": "cpu"
+  },
+  "radar": {
+    "spatial_oversampling": 4,
+    "min_snr_db": 12.0,
+    "min_peak_fraction": 0.1
+  },
+  "visual_association": {
+    "status": "requires_train_calibration",
+    "appearance_weight": 0.05,
+    "confirmation": "legacy_visual_gated"
+  },
+  "kalman": {
+    "status": "requires_train_calibration",
+    "acceleration_variance": 1.0,
+    "initial_velocity_variance": 25.0,
+    "measurement_variance": 4.0
+  },
+  "evaluation": {
+    "primary": "position_rmse_3d_m",
+    "matching": "same_per_frame_one_to_one_euclidean",
+    "match_max_distance_m": null,
+    "bootstrap_draws": 2000,
+    "bootstrap_seed": 20261126,
+    "report_detection_coverage": true
+  }
+}
